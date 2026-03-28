@@ -1,10 +1,200 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hello, World!</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Those Who Rule</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #0b0f1a;
+      color: #e6e6e6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    h1, h2 {
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 48px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-top: 60px;
+    }
+
+    p {
+      line-height: 1.6;
+      color: #b0b0b0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px 60px;
+      background: linear-gradient(to bottom, #111827, #0b0f1a);
+    }
+
+    .hero img {
+      max-width: 500px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 14px 24px;
+      background: #1f2937;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: #374151;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .video {
+      margin-top: 30px;
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+
+    .video iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .features {
+      margin-top: 20px;
+    }
+
+    .features li {
+      margin-bottom: 10px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      padding: 40px 20px;
+      border-top: 1px solid #1f2937;
+      color: #777;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Heading</h1>
-    <p>Paragraph.</p>
+
+  <!-- HERO -->
+  <section class="hero">
+    <!-- Replace with your logo -->
+    <img src="assets/logo.png" alt="Those Who Rule Logo">
+
+    <h1>Those Who Rule</h1>
+    <p>
+      Lead a band of recruits through a web of betrayal as war looms over the land.
+      Master tactical turn-based combat and shape the fate of a fractured kingdom.
+    </p>
+
+    <div class="buttons">
+      <a href="https://store.steampowered.com/app/1822060/Those_Who_Rule/" class="btn btn-primary" target="_blank">Wishlist on Steam</a>
+      <a href="https://drive.google.com/drive/u/0/folders/1q9VYGPHWTzJ1kFx45cvy0beA4yXTcTfD" class="btn" target="_blank">Download Press Kit</a>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- TRAILER -->
+    <h2>Trailer</h2>
+    <div class="video">
+      <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" allowfullscreen></iframe>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <h2>Screenshots</h2>
+    <div class="gallery">
+      <img src="assets/screen1.jpg">
+      <img src="assets/screen2.jpg">
+      <img src="assets/screen3.jpg">
+      <img src="assets/screen4.jpg">
+    </div>
+
+    <!-- ABOUT -->
+    <h2>About the Game</h2>
+    <p>
+      Those Who Rule is a tactical turn-based RPG focused on positioning, terrain, and challenging combat.
+      Lead a roster of unique characters, master over 40 classes, and forge your path through a land
+      shaped by the choices you make.
+    </p>
+
+    <ul class="features">
+      <li>Turn-based tactical combat with deep positioning mechanics</li>
+      <li>24+ unique characters with distinct roles and motivations</li>
+      <li>34 branching classes and 100+ abilities</li>
+      <li>Level up, change classes, equip custom gear, and hone your recruits into elite warriors</li>
+    </ul>
+
+    <!-- PRESS KIT AGAIN -->
+    <div class="buttons" style="text-align:center;">
+      <a href="https://drive.google.com/drive/u/0/folders/1q9VYGPHWTzJ1kFx45cvy0beA4yXTcTfD" class="btn">Press Kit</a>
+    </div>
+
+    <!-- DEV -->
+    <h2>Developer</h2>
+    <p>
+      Those Who Rule is developed by a solo developer who left a corporate software career
+      to bring a lifelong passion for tactical RPGs to life.
+    </p>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      Contact: eturulja@thosewhorule.com
+    </p>
+  </footer>
+
 </body>
 </html>
