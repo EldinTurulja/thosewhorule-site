@@ -7,19 +7,23 @@
   <meta name="description" content="Official site for Those Who Rule and Those Who Rule 2." />
   <style>
     :root {
-      --bg: #0c111b;
-      --bg-soft: #111828;
-      --panel: rgba(10, 15, 25, 0.82);
+      --bg: #081019;
+      --bg-soft: #0e1623;
+      --panel: rgba(8, 13, 22, 0.82);
+      --panel-strong: rgba(8, 13, 22, 0.92);
       --text: #eef2f7;
-      --muted: #aeb8c7;
+      --muted: #aeb7c6;
       --line: rgba(255, 255, 255, 0.1);
       --gold: #c8a96b;
-      --gold-strong: #e0bf7d;
-      --max: 1200px;
-      --radius: 18px;
+      --gold-strong: #e4c789;
+      --max: 1240px;
+      --radius: 22px;
       --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-      --header-h: 84px;
-      --hero-image: url('assets/twr-hero.png');
+      --header-h: 88px;
+      --hero-offset: 0px;
+      --parallax-y: 0px;
+      --char-left-y: 0px;
+      --char-right-y: 0px;
     }
 
     * {
@@ -33,12 +37,10 @@
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        linear-gradient(rgba(7, 11, 18, 0.72), rgba(7, 11, 18, 0.9)),
-        var(--hero-image) center top / cover fixed no-repeat,
-        var(--bg);
+      background: linear-gradient(180deg, #081019 0%, #0b1320 48%, #071019 100%);
       color: var(--text);
       line-height: 1.55;
+      overflow-x: hidden;
     }
 
     a {
@@ -46,23 +48,32 @@
       text-decoration: none;
     }
 
-    img {
+    img,
+    video {
       display: block;
       max-width: 100%;
     }
 
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
     .shell {
       min-height: 100vh;
-      backdrop-filter: blur(2px);
+      position: relative;
+      isolation: isolate;
     }
 
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 100;
       height: var(--header-h);
       border-bottom: 1px solid var(--line);
-      background: rgba(8, 12, 20, 0.78);
+      background: rgba(7, 11, 18, 0.8);
       backdrop-filter: blur(16px);
     }
 
@@ -71,10 +82,10 @@
       height: 100%;
       margin: 0 auto;
       padding: 0 20px;
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+      gap: 18px;
     }
 
     .brand-switcher {
@@ -91,7 +102,7 @@
       padding: 10px 14px;
       border-radius: 999px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 0.02em;
       transition: 0.2s ease;
       white-space: nowrap;
@@ -99,39 +110,62 @@
 
     .brand-btn:hover,
     .brand-btn.active {
-      border-color: rgba(224, 191, 125, 0.5);
-      background: rgba(224, 191, 125, 0.12);
+      border-color: rgba(228, 199, 137, 0.45);
+      background: rgba(228, 199, 137, 0.12);
       color: var(--gold-strong);
     }
 
     .main-nav {
       display: flex;
       align-items: center;
-      gap: 18px;
+      justify-content: center;
+      gap: 20px;
       flex-wrap: wrap;
-      justify-content: flex-end;
     }
 
     .main-nav a {
       color: var(--muted);
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .main-nav a:hover {
       color: var(--text);
     }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .press-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(228, 199, 137, 0.48);
+      background: rgba(228, 199, 137, 0.16);
+      color: #f4e6c4;
+      font-weight: 800;
+      transition: 0.2s ease;
+    }
+
+    .press-btn:hover {
+      background: rgba(228, 199, 137, 0.24);
+    }
+
     .socials {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-left: 4px;
     }
 
     .social-link {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 999px;
       border: 1px solid var(--line);
       display: inline-flex;
@@ -139,52 +173,118 @@
       justify-content: center;
       color: var(--muted);
       background: rgba(255,255,255,0.03);
-      font-size: 0.9rem;
-      font-weight: 800;
+      transition: 0.2s ease;
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      display: block;
     }
 
     .social-link:hover {
       color: var(--text);
-      border-color: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.24);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .character-stage {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .character {
+      position: absolute;
+      top: 50%;
+      width: min(25vw, 360px);
+      max-height: 80vh;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,0.35));
+      opacity: 0;
+      transition: opacity 0.45s ease;
+      will-change: transform, opacity;
+    }
+
+    .character-left {
+      left: clamp(10px, 2vw, 30px);
+      transform: translateY(calc(-50% + var(--char-left-y)));
+      transform-origin: center center;
+    }
+
+    .character-right {
+      right: clamp(10px, 2vw, 30px);
+      transform: translateY(calc(-50% + var(--char-right-y)));
+      transform-origin: center center;
     }
 
     .section {
+      position: relative;
+      z-index: 4;
       max-width: var(--max);
       margin: 0 auto;
-      padding: 30px 20px 0;
+      padding: 28px 20px 0;
       scroll-margin-top: calc(var(--header-h) + 18px);
     }
 
     .hero {
       min-height: calc(100vh - var(--header-h));
       display: flex;
-      align-items: center;
-      padding-top: 34px;
-      padding-bottom: 30px;
-    }
-
-    .hero-grid {
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 24px;
       align-items: stretch;
+      padding-top: 26px;
+      padding-bottom: 16px;
     }
 
-    .hero-copy,
-    .hero-card,
-    .panel {
-      background: var(--panel);
+    .hero-shell {
+      width: 100%;
+      position: relative;
+      min-height: min(840px, calc(100vh - var(--header-h) - 28px));
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 28px;
+      overflow: hidden;
       box-shadow: var(--shadow);
+      background: #050b14;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: -3% -2% 0 -2%;
+      transform: translateY(calc(var(--hero-offset) + var(--parallax-y)));
+      will-change: transform;
+    }
+
+    .hero-media video,
+    .hero-media img {
+      width: 100%;
+      height: 108%;
+      object-fit: cover;
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center, rgba(0,0,0,0) 34%, rgba(0,0,0,0.45) 90%),
+        linear-gradient(180deg, rgba(6,10,16,0.35) 0%, rgba(6,10,16,0.65) 48%, rgba(6,10,16,0.84) 100%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      min-height: inherit;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 24px;
+      align-items: end;
+      padding: 42px;
     }
 
     .hero-copy {
-      padding: 42px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      max-width: 760px;
     }
 
     .eyebrow {
@@ -192,29 +292,31 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-size: 0.78rem;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 14px;
     }
 
     h1 {
-      font-size: clamp(2.5rem, 5vw, 4.9rem);
-      line-height: 0.96;
+      font-size: clamp(3rem, 6vw, 5.7rem);
+      line-height: 0.95;
       margin: 0 0 16px;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.05em;
+      max-width: 10ch;
     }
 
     .hero-copy p {
-      max-width: 58ch;
+      max-width: 56ch;
       font-size: 1.08rem;
-      color: var(--muted);
+      color: #d1d8e4;
       margin: 0 0 24px;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.4);
     }
 
     .cta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .btn {
@@ -242,73 +344,60 @@
     }
 
     .btn-secondary {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.06);
       color: var(--text);
-      border-color: var(--line);
+      border-color: rgba(255,255,255,0.16);
     }
 
     .btn-secondary:hover {
       border-color: rgba(255,255,255,0.24);
-      background: rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.09);
     }
 
     .stats {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
-      margin-top: 10px;
+      margin-top: 6px;
     }
 
     .stat {
       padding: 14px 16px;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius: 16px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(9, 15, 25, 0.48);
+      backdrop-filter: blur(10px);
     }
 
     .stat strong {
       display: block;
       font-size: 1.35rem;
-      color: var(--text);
       margin-bottom: 4px;
     }
 
     .stat span {
-      color: var(--muted);
+      color: #d5ddea;
       font-size: 0.9rem;
     }
 
-    .hero-card {
-      overflow: hidden;
-      position: relative;
-      min-height: 560px;
+    .hero-sidecard {
+      align-self: end;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 20px;
+      background: rgba(9, 15, 25, 0.68);
+      backdrop-filter: blur(14px);
     }
 
-    .hero-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .hero-card-overlay {
-      position: absolute;
-      inset: auto 18px 18px 18px;
-      background: rgba(10, 15, 25, 0.78);
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-      backdrop-filter: blur(10px);
-    }
-
-    .hero-card-overlay h3 {
+    .hero-sidecard h3 {
       margin: 0 0 8px;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
     }
 
-    .hero-card-overlay p {
+    .hero-sidecard p {
       margin: 0;
-      color: var(--muted);
-      font-size: 0.95rem;
+      color: #d1d8e4;
+      font-size: 0.96rem;
     }
 
     .section-head {
@@ -321,26 +410,31 @@
 
     .section-head h2 {
       margin: 0;
-      font-size: clamp(1.75rem, 3vw, 2.6rem);
-      letter-spacing: -0.03em;
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      letter-spacing: -0.04em;
     }
 
     .section-head p {
       margin: 0;
       color: var(--muted);
-      max-width: 55ch;
+      max-width: 60ch;
     }
 
     .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
       padding: 20px;
+      overflow: hidden;
     }
 
     .video-wrap {
       aspect-ratio: 16 / 9;
-      overflow: hidden;
       border-radius: 18px;
-      border: 1px solid var(--line);
+      overflow: hidden;
       background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
     }
 
     .video-wrap iframe {
@@ -355,67 +449,133 @@
       gap: 16px;
     }
 
-    .media-card {
+    .gallery-shot {
       grid-column: span 4;
-      border: 1px solid var(--line);
       border-radius: 18px;
       overflow: hidden;
       background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
     }
 
-    .media-card img {
+    .gallery-shot img {
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
     }
 
-    .media-caption {
-      padding: 12px 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-
-    .feature-grid {
+    .feature-shell {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 22px;
+      align-items: stretch;
     }
 
-    .feature {
-      padding: 18px;
-      border-radius: 18px;
+    .feature-stage {
       border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
       background: rgba(255,255,255,0.03);
     }
 
-    .feature h3 {
-      margin: 0 0 8px;
-      font-size: 1.05rem;
+    .feature-video-wrap {
+      aspect-ratio: 16 / 9;
+      background: #050b14;
+      border-bottom: 1px solid var(--line);
     }
 
-    .feature p {
+    .feature-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .feature-copy {
+      padding: 22px;
+    }
+
+    .feature-copy h3 {
+      margin: 0 0 10px;
+      font-size: 1.55rem;
+      letter-spacing: -0.03em;
+    }
+
+    .feature-copy p {
       margin: 0;
       color: var(--muted);
+      font-size: 1.02rem;
+      min-height: 4.5em;
     }
 
-    .press-grid,
-    .about-grid,
-    .footer-grid {
+    .feature-tabs {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .feature-tab {
+      width: 100%;
+      text-align: left;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      padding: 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .feature-tab strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .feature-tab span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+
+    .feature-tab:hover,
+    .feature-tab.active {
+      border-color: rgba(228, 199, 137, 0.45);
+      background: rgba(228, 199, 137, 0.08);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: 18px;
     }
 
-    .press-list,
-    .link-list {
-      margin: 0;
-      padding-left: 18px;
+    .about-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.03);
+      padding: 22px;
+    }
+
+    .about-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .about-card p,
+    .about-card li {
       color: var(--muted);
     }
 
-    .press-list li,
-    .link-list li {
-      margin-bottom: 10px;
+    .contact-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .contact-list a {
+      color: var(--text);
+      font-weight: 700;
     }
 
     .footer {
@@ -428,13 +588,19 @@
       font-size: 0.95rem;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1180px) {
+      .character {
+        width: min(24vw, 300px);
+      }
+    }
+
+    @media (max-width: 1040px) {
       .header-inner {
-        align-items: flex-start;
-        justify-content: center;
-        flex-direction: column;
-        padding-top: 12px;
-        padding-bottom: 12px;
+        grid-template-columns: 1fr;
+        justify-items: start;
+        align-content: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
         height: auto;
       }
 
@@ -442,42 +608,53 @@
         height: auto;
       }
 
+      .main-nav {
+        justify-content: flex-start;
+      }
+
+      .hero-content,
+      .feature-shell,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-shell {
+        min-height: 760px;
+      }
+
+      .gallery-shot {
+        grid-column: span 6;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .character-stage {
+        display: none;
+      }
+
       .hero {
         min-height: auto;
       }
 
-      .hero-grid,
-      .press-grid,
-      .about-grid,
-      .footer-grid,
-      .feature-grid {
-        grid-template-columns: 1fr;
+      .hero-shell {
+        min-height: 640px;
+      }
+
+      .hero-content {
+        padding: 24px;
+        gap: 18px;
       }
 
       .gallery-grid {
         grid-template-columns: 1fr;
       }
 
-      .media-card {
+      .gallery-shot {
         grid-column: auto;
-      }
-
-      .stats {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .hero-card {
-        min-height: 360px;
-      }
-
-      .main-nav {
-        justify-content: flex-start;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .hero-copy {
-        padding: 24px;
       }
 
       .stats {
@@ -490,9 +667,29 @@
         padding-bottom: 4px;
       }
 
+      .header-actions {
+        flex-wrap: wrap;
+      }
+
       .section {
         padding-left: 14px;
         padding-right: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .character,
+      .hero-media,
+      .brand-btn,
+      .feature-tab,
+      .social-link,
+      .press-btn,
+      .btn {
+        transition: none;
       }
     }
   </style>
@@ -508,47 +705,74 @@
 
         <nav class="main-nav">
           <a href="#trailer">Trailer</a>
-          <a href="#media">Media</a>
+          <a href="#gallery">Gallery</a>
           <a href="#features">Features</a>
-          <a href="#press">Press Kit</a>
           <a href="#about">About</a>
-          <div class="socials">
-            <a class="social-link" id="steamLink" href="#" target="_blank" rel="noreferrer">S</a>
-            <a class="social-link" id="youtubeLink" href="#" target="_blank" rel="noreferrer">Y</a>
-            <a class="social-link" id="twitterLink" href="#" target="_blank" rel="noreferrer">X</a>
-            <a class="social-link" id="discordLink" href="#" target="_blank" rel="noreferrer">D</a>
-          </div>
         </nav>
+
+        <div class="header-actions">
+          <a class="press-btn" id="headerPressKit" href="#" target="_blank" rel="noreferrer">Press Kit</a>
+          <div class="socials">
+            <a class="social-link" id="steamLink" href="#" target="_blank" rel="noreferrer" aria-label="Steam">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M11.98 1.5a10.5 10.5 0 0 0-10.13 13.28l4.98 2.07a3.56 3.56 0 0 1 2.02-.1l2.22-3.22v-.05a4.47 4.47 0 1 1 4.47 4.47h-.1l-3.17 2.26c.01.16.03.31.03.47a3.58 3.58 0 1 1-3.58-3.58h.16l2.22-3.17a4.48 4.48 0 0 1 4.4-5.44 4.47 4.47 0 0 1 0 8.94 4.33 4.33 0 0 1-.51-.03l-2.24 3.2a3.58 3.58 0 0 1-5.72 3.55l-4-1.66A10.5 10.5 0 1 0 11.98 1.5Zm-1.4 17.75-1.14-.47a2.03 2.03 0 1 0 .77 3.98 2.04 2.04 0 0 0 .37-3.5Zm4.92-8.84a2.93 2.93 0 1 0 2.93 2.93 2.93 2.93 0 0 0-2.93-2.93Z"/>
+              </svg>
+            </a>
+            <a class="social-link" id="youtubeLink" href="#" target="_blank" rel="noreferrer" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M23.5 6.2a3.02 3.02 0 0 0-2.12-2.14C19.48 3.5 12 3.5 12 3.5s-7.48 0-9.38.56A3.02 3.02 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3.02 3.02 0 0 0 2.12 2.14c1.9.56 9.38.56 9.38.56s7.48 0 9.38-.56a3.02 3.02 0 0 0 2.12-2.14A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.4 3.7-6.4 3.7Z"/>
+              </svg>
+            </a>
+            <a class="social-link" id="twitterLink" href="#" target="_blank" rel="noreferrer" aria-label="X">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.9 2H22l-6.76 7.73L23.2 22h-6.24l-4.9-7.48L5.5 22H2.4l7.23-8.27L.8 2h6.36l4.42 6.75L18.9 2Zm-1.1 18h1.73L6.23 3.9H4.38L17.8 20Z"/>
+              </svg>
+            </a>
+            <a class="social-link" id="discordLink" href="#" target="_blank" rel="noreferrer" aria-label="Discord">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.32 4.37A16.7 16.7 0 0 0 16.2 3.1l-.2.4c1.64.4 2.4.98 2.4.98a13.15 13.15 0 0 0-4.1-1.2 13.92 13.92 0 0 0-4.6 0 13.15 13.15 0 0 0-4.1 1.2s.8-.63 2.62-1.03l-.14-.35a16.77 16.77 0 0 0-4.14 1.28S1.4 8.44 1 12.4a16.95 16.95 0 0 0 5.08 3.07l1.1-1.8c-.64-.22-1.3-.54-1.9-.95 0 0 .16.12.46.3a9.95 9.95 0 0 0 .9.45 8.8 8.8 0 0 0 1.58.45 7.6 7.6 0 0 0 2 .18 7.6 7.6 0 0 0 2-.18 8.8 8.8 0 0 0 1.58-.45 9.95 9.95 0 0 0 .9-.45c.3-.18.46-.3.46-.3-.6.41-1.26.73-1.9.95l1.1 1.8A16.95 16.95 0 0 0 23 12.4c-.4-3.96-2.68-8.03-2.68-8.03ZM8.94 12.8c-.8 0-1.46-.73-1.46-1.64 0-.9.64-1.64 1.46-1.64.82 0 1.47.74 1.46 1.64 0 .9-.64 1.64-1.46 1.64Zm6.12 0c-.8 0-1.46-.73-1.46-1.64 0-.9.64-1.64 1.46-1.64.82 0 1.47.74 1.46 1.64 0 .9-.64 1.64-1.46 1.64Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
     </header>
 
+    <div class="character-stage" aria-hidden="true">
+      <img class="character character-left" id="characterLeft" src="assets/blank.png" alt="" />
+      <img class="character character-right" id="characterRight" src="assets/blank.png" alt="" />
+    </div>
+
     <main>
-      <section class="section hero" id="top">
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <div class="eyebrow" id="heroEyebrow">Tactical RPG</div>
-            <h1 id="heroTitle">Those Who Rule</h1>
-            <p id="heroBody"></p>
-
-            <div class="cta-row">
-              <a class="btn btn-primary" id="primaryCta" href="#" target="_blank" rel="noreferrer">Wishlist on Steam</a>
-              <a class="btn btn-secondary" id="pressCta" href="#" target="_blank" rel="noreferrer">Download Press Kit</a>
-            </div>
-
-            <div class="stats" id="stats"></div>
+      <section class="section hero" id="top" data-character-side="left" data-character-index="0">
+        <div class="hero-shell">
+          <div class="hero-media" id="heroMediaWrap">
+            <video id="heroVideo" muted playsinline preload="metadata"></video>
           </div>
 
-          <div class="hero-card">
-            <img id="heroImage" src="assets/twr-keyart.png" alt="Those Who Rule key art" />
-            <div class="hero-card-overlay">
+          <div class="hero-content">
+            <div class="hero-copy">
+              <div class="eyebrow" id="heroEyebrow">Tactical RPG</div>
+              <h1 id="heroTitle">Those Who Rule</h1>
+              <p id="heroBody"></p>
+
+              <div class="cta-row">
+                <a class="btn btn-primary" id="primaryCta" href="#" target="_blank" rel="noreferrer">View on Steam</a>
+                <a class="btn btn-secondary" id="heroYoutube" href="#trailer">Watch Trailer</a>
+              </div>
+
+              <div class="stats" id="stats"></div>
+            </div>
+
+            <aside class="hero-sidecard">
               <h3 id="heroCardTitle"></h3>
               <p id="heroCardBody"></p>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section class="section" id="trailer">
+      <section class="section" id="trailer" data-character-side="right" data-character-index="1">
         <div class="section-head">
           <div>
             <h2>Trailer</h2>
@@ -562,83 +786,63 @@
         </div>
       </section>
 
-      <section class="section" id="media">
+      <section class="section" id="gallery" data-character-side="left" data-character-index="2">
         <div class="section-head">
           <div>
-            <h2>Media</h2>
-            <p id="mediaText"></p>
+            <h2>Gallery</h2>
+            <p id="galleryText"></p>
           </div>
         </div>
         <div class="panel">
-          <div class="gallery-grid" id="mediaGrid"></div>
+          <div class="gallery-grid" id="galleryGrid"></div>
         </div>
       </section>
 
-      <section class="section" id="features">
+      <section class="section" id="features" data-character-side="right" data-character-index="3">
         <div class="section-head">
           <div>
             <h2>Features</h2>
             <p id="featuresText"></p>
           </div>
         </div>
-        <div class="panel">
-          <div class="feature-grid" id="featureGrid"></div>
-        </div>
-      </section>
-
-      <section class="section" id="press">
-        <div class="section-head">
-          <div>
-            <h2>Press Kit</h2>
-            <p id="pressText"></p>
-          </div>
-        </div>
-        <div class="panel press-grid">
-          <div>
-            <div class="cta-row">
-              <a class="btn btn-primary" id="pressMainButton" href="#" target="_blank" rel="noreferrer">Open Press Kit</a>
-              <a class="btn btn-secondary" id="steamStoreButton" href="#" target="_blank" rel="noreferrer">View on Steam</a>
+        <div class="panel feature-shell">
+          <div class="feature-stage">
+            <div class="feature-video-wrap">
+              <video class="feature-video" id="featureVideo" muted playsinline preload="metadata" loop></video>
             </div>
-            <p id="pressSummary"></p>
+            <div class="feature-copy">
+              <h3 id="featureTitle"></h3>
+              <p id="featureDescription"></p>
+            </div>
           </div>
-          <div>
-            <ul class="press-list" id="pressList"></ul>
-          </div>
+          <div class="feature-tabs" id="featureTabs"></div>
         </div>
       </section>
 
-      <section class="section" id="about">
+      <section class="section footer" id="about" data-character-side="left" data-character-index="4">
         <div class="section-head">
           <div>
-            <h2>About</h2>
+            <h2>About the Developer</h2>
             <p id="aboutText"></p>
           </div>
         </div>
         <div class="panel about-grid">
-          <div>
-            <h3 id="aboutGameTitle"></h3>
-            <p id="aboutGameBody"></p>
-          </div>
-          <div>
-            <h3>Developer</h3>
+          <div class="about-card">
+            <h3>Background</h3>
             <p id="aboutDevBody"></p>
+            <p id="aboutDevBody2"></p>
           </div>
-        </div>
-      </section>
-
-      <section class="section footer" id="contact">
-        <div class="panel footer-grid">
-          <div>
-            <h3>Links</h3>
-            <ul class="link-list">
-              <li><a id="footerSteam" href="#" target="_blank" rel="noreferrer">Steam</a></li>
-              <li><a id="footerPress" href="#" target="_blank" rel="noreferrer">Press Kit</a></li>
-              <li><a id="footerYoutube" href="#" target="_blank" rel="noreferrer">YouTube Trailer</a></li>
-            </ul>
-          </div>
-          <div>
+          <div class="about-card">
             <h3>Contact</h3>
-            <p><a href="mailto:eturulja@thosewhorule.com">eturulja@thosewhorule.com</a></p>
+            <ul class="contact-list">
+              <li>Email: <a href="mailto:eturulja@thosewhorule.com">eturulja@thosewhorule.com</a></li>
+              <li>Steam: <a id="footerSteam" href="#" target="_blank" rel="noreferrer">Store Page</a></li>
+              <li>YouTube: <a id="footerYoutube" href="#" target="_blank" rel="noreferrer">Those Who Rule</a></li>
+              <li>X / Twitter: <a id="footerTwitter" href="#" target="_blank" rel="noreferrer">@ThoseWhoRule</a></li>
+              <li>Discord: <a id="footerDiscord" href="#" target="_blank" rel="noreferrer">Community Server</a></li>
+              <li>Press Kit: <a id="footerPress" href="#" target="_blank" rel="noreferrer">Download Assets</a></li>
+            </ul>
+            <p class="footer-note">After you drop in the final assets, this page is deployment-ready for GitHub Pages.</p>
           </div>
         </div>
       </section>
@@ -650,72 +854,80 @@
       twr: {
         title: 'Those Who Rule',
         eyebrow: 'Tactical RPG',
-        heroBody: 'Join three fresh recruits caught in a web of betrayal as war looms over the land. Lead your band of heroes through tactical turn-based battles, master unique abilities, and forge powerful gear to turn the tide of battle.',
-        heroImage: 'assets/twr-keyart.png',
-        backgroundImage: "url('assets/twr-hero.png')",
-        cardTitle: 'Grounded strategy, sharp consequences',
-        cardBody: 'Positioning, terrain, and chained abilities decide every fight. No magic. No filler. Just brutal tactical choices.',
+        heroBody: 'Lead three fresh recruits through a web of betrayal as war looms over the land. Master tactical turn-based battles, build your force, and fight through a grounded low-fantasy civil war.',
+        heroVideo: 'assets/twr-hero-map.mp4',
+        heroPoster: 'assets/twr-hero-poster.png',
+        heroCardTitle: 'Grounded strategy, sharp consequences',
+        heroCardBody: 'Positioning, terrain, and chained abilities decide every fight. No magic. No filler. Just brutal tactical choices.',
         trailerText: 'A quick look at the world, combat, and tone of the first game.',
-        trailerEmbed: 'https://www.youtube.com/embed/5F9NeonON6I',
-        mediaText: 'Use your strongest screenshots, battle shots, UI, and a couple GIFs here. Six good images beats fifteen random ones.',
-        featuresText: 'Keep this tight. Press and players should understand the game in seconds.',
-        pressText: 'Keep the press kit one click away. Do not bury it.',
-        pressSummary: 'The press kit should include logos, key art, screenshots, GIFs, fact sheet text, trailers, and store links.',
-        aboutText: 'A short pitch for the game and a tighter paragraph on you.',
-        aboutGameTitle: 'About the game',
-        aboutGameBody: 'Those Who Rule is a turn-based tactical RPG focused on careful positioning, terrain, class progression, and political conflict. Battles reward planning, flanking, and efficient use of your unit roster.',
-        aboutDevBody: 'Those Who Rule is developed by solo developer Eldin Turulja, who left a corporate software career to bring a long-running tactical RPG project to market. The first game has sold more than 30,000 copies on Steam.',
+        trailerEmbed: 'https://www.youtube.com/embed/YOUR_TWR_VIDEO_ID',
+        galleryText: 'Use a clean set of high-value screenshots here. Keep them all 16:9 and let the art speak for itself.',
+        featuresText: 'Show the game through motion. Each panel should make the fantasy of playing instantly clear.',
+        aboutText: 'A short, human section for press, creators, and anyone curious about who made the games.',
+        aboutDevBody: 'Those Who Rule is developed by solo developer Eldin Turulja, who left a corporate software career to finish the tactical RPG he had been building for years on nights and weekends.',
+        aboutDevBody2: 'The first game has sold more than 30,000 copies on Steam, and the site exists to give players and press a fast, clean place to see the games, grab assets, and get in touch.',
         steamUrl: 'https://store.steampowered.com/app/1822060/Those_Who_Rule/',
-        pressUrl: 'https://drive.google.com/drive/u/0/folders/1q9VYGPHWTzJ1kFx45cvy0beA4yXTcTfD',
+        pressUrl: 'https://drive.google.com/file/d/1xFjk64fhNVgYMaXm4XKoijgh5Hj04C-t/view?usp=sharing',
         youtubeUrl: 'https://www.youtube.com/@thosewhorule',
         twitterUrl: 'https://x.com/ThoseWhoRule',
         discordUrl: 'https://discord.gg/XWzz8TnxeM',
         stats: [
-          ['30', 'Story characters'],
-          ['30+', 'Branching classes'],
-          ['100+', 'Abilities'],
+          ['20', 'Story characters'],
+          ['46', 'Branching classes'],
+          ['200+', 'Abilities'],
           ['30k+', 'Copies sold']
         ],
+        gallery: [
+          'assets/twr-gallery-1.png',
+          'assets/twr-gallery-2.png',
+          'assets/twr-gallery-3.png',
+          'assets/twr-gallery-4.png',
+          'assets/twr-gallery-5.png',
+          'assets/twr-gallery-6.png'
+        ],
         features: [
-          ['Rewarding tactical combat', 'Exploit terrain, flanking, zones of control, and chained abilities to create openings and survive bad odds.'],
-          ['Forge your force', 'Train unique characters, recruit spared enemies, and shape your squad around risk, utility, and battlefield control.'],
-          ['Low-fantasy war story', 'Fight through a grounded political conflict driven by ambition, betrayal, and competing visions for the future.'],
-          ['Flexible progression', 'Mix branching classes, gear, and ability choices to build a force that fits your style.']
+          {
+            title: 'Fight Tactical Battles',
+            description: 'Add your own final description here. This should explain the tactical identity of the game in a few sharp sentences.',
+            video: 'assets/twr-feature-battles.mp4',
+            thumb: 'assets/twr-feature-battles.png'
+          },
+          {
+            title: 'Recruit and Train',
+            description: 'Add your own final description here. Use this panel to sell roster building, progression, and squad shaping.',
+            video: 'assets/twr-feature-recruit.mp4',
+            thumb: 'assets/twr-feature-recruit.png'
+          },
+          {
+            title: 'Make Story Altering Decisions',
+            description: 'Add your own final description here. Keep it direct and specific once you are ready.',
+            video: 'assets/twr-feature-decisions.mp4',
+            thumb: 'assets/twr-feature-decisions.png'
+          }
         ],
-        pressItems: [
-          'Logos and transparent key art',
-          'Trailer links and Steam store links',
-          'Screenshots and animated GIFs',
-          'Fact sheet and game descriptions',
-          'Developer bio and contact info'
-        ],
-        media: [
-          ['assets/twr1-screen1.png', 'Combat screenshot'],
-          ['assets/twr1-screen2.png', 'Movement screenshot'],
-          ['assets/twr1-screen3.png', 'Dialogue choices screenshot'],
-          ['assets/twr1-screen4.png', 'Level up screenshot'],
-          ['assets/twr1-screen5.png', 'Power up mid-battle screenshot'],
-          ['assets/twr1-screen6.png', 'Weapon forging screenshot']
+        characters: [
+          'assets/twr-char-1.png',
+          'assets/twr-char-2.png',
+          'assets/twr-char-3.png',
+          'assets/twr-char-4.png',
+          'assets/twr-char-5.png'
         ]
       },
       twr2: {
         title: 'Those Who Rule 2',
         eyebrow: 'Upcoming Tactical RPG',
-        heroBody: 'When a country cracks, those willing to act will decide its future. From a small militia to a force that shapes a nation, forge your squad, customize builds, and outmaneuver foes in challenging turn-based battles as you shape a gripping story of hope, betrayal, and the price of unity.',
-        heroImage: 'assets/twr2-keyart.png',
-        backgroundImage: "url('assets/twr2-background.png')",
-        cardTitle: 'A more ambitious sequel',
-        cardBody: 'A larger conflict, sharper factional identity, and a story built around the collapse of a fragile state.',
-        trailerText: 'Use the announcement trailer or teaser here. Keep it front and center.',
-        trailerEmbed: 'https://www.youtube.com/embed/CsvS52jomdM',
-        mediaText: 'Show key art, early screenshots, concept frames, and a few high-value GIFs once you have them.',
-        featuresText: 'Keep the sequel pitch distinct. Don’t let it read like the first game with a 2 on the end.',
-        pressText: 'If the sequel has its own press kit, keep it separate from the first game and switch it with the toggle.',
-        pressSummary: 'Give press the sequel trailer, logos, screenshots, teaser art, localized description text, and Steam page links in one folder.',
-        aboutText: 'A cleaner pitch for the sequel, with a stronger emphasis on its premise.',
-        aboutGameTitle: 'About the sequel',
-        aboutGameBody: 'Those Who Rule 2 expands the political and tactical scope of the first game, following characters caught in the breakup of a federal state. It keeps the grounded combat focus while pushing harder on factional tension, identity, and consequence.',
-        aboutDevBody: 'The sequel builds on the first game’s foundation while aiming for stronger presentation, sharper faction identity, and a broader audience of tactical RPG players.',
+        heroBody: 'A nation fractures. Former allies turn into enemies. Lead a cast caught between federation, self-determination, and survival in a harsher, more politically charged follow-up.',
+        heroVideo: 'assets/twr2-hero-map.mp4',
+        heroPoster: 'assets/twr2-hero-poster.png',
+        heroCardTitle: 'A more ambitious sequel',
+        heroCardBody: 'A broader conflict, sharper faction identity, and a story built around the collapse of a fragile state.',
+        trailerText: 'Use the announcement trailer or teaser here and keep it front and center.',
+        trailerEmbed: 'https://www.youtube.com/embed/YOUR_TWR2_VIDEO_ID',
+        galleryText: 'Show key art, early screenshots, mockups, and polished captures. Keep the grid visually consistent.',
+        featuresText: 'Give the sequel its own identity. The page should not feel like the first game with a different logo.',
+        aboutText: 'Keep this section focused on you, the project, and where people should go next.',
+        aboutDevBody: 'Those Who Rule 2 builds on the audience and foundation of the first game while pushing harder on presentation, faction identity, and political conflict.',
+        aboutDevBody2: 'This page exists to make the sequel easy to understand fast, while giving press and creators a direct path to assets, trailers, and contact details.',
         steamUrl: 'https://store.steampowered.com/app/4299520/Those_Who_Rule_2',
         pressUrl: 'https://drive.google.com/drive/u/0/folders/1q9VYGPHWTzJ1kFx45cvy0beA4yXTcTfD',
         youtubeUrl: 'https://www.youtube.com/@thosewhorule',
@@ -723,68 +935,91 @@
         discordUrl: 'https://discord.gg/XWzz8TnxeM',
         stats: [
           ['2026', 'Announcement year'],
-          ['2', 'Playable factions?'],
-          ['1', 'Larger civil war'],
-          ['∞', 'Room to refine later']
+          ['2', 'Games in the series'],
+          ['1', 'Fracturing nation'],
+          ['∞', 'Room to grow']
+        ],
+        gallery: [
+          'assets/twr2-gallery-1.png',
+          'assets/twr2-gallery-2.png',
+          'assets/twr2-gallery-3.png',
+          'assets/twr2-gallery-4.png',
+          'assets/twr2-gallery-5.png',
+          'assets/twr2-gallery-6.png'
         ],
         features: [
-          ['Civil war on a broader scale', 'Push the sequel as a bigger conflict with competing national projects, not just another fantasy campaign.'],
-          ['Tactical systems returning', 'Retain the identity of the first game: terrain, positioning, and ability interplay still matter first.'],
-          ['More distinct faction framing', 'Make the political sides readable at a glance through art, language, iconography, and scenario design.'],
-          ['Press-ready sequel pitch', 'Use the site to separate what is already playable from what is being announced.']
+          {
+            title: 'Master Rewarding Tactics',
+            description: 'Add your own final description here. This should sell the sequel’s combat identity in a few dense, clear sentences.',
+            video: 'assets/twr2-feature-tactics.mp4',
+            thumb: 'assets/twr2-feature-tactics.png'
+          },
+          {
+            title: 'Forge Your Vanguard',
+            description: 'Add your own final description here. Use it to explain building your force and shaping the frontline of the conflict.',
+            video: 'assets/twr2-feature-vanguard.mp4',
+            thumb: 'assets/twr2-feature-vanguard.png'
+          },
+          {
+            title: 'Define Your Nation',
+            description: 'Add your own final description here. This is where the ideological hook of the sequel should land.',
+            video: 'assets/twr2-feature-nation.mp4',
+            thumb: 'assets/twr2-feature-nation.png'
+          }
         ],
-        pressItems: [
-          'Announcement trailer and teaser assets',
-          'Logos, key art, and transparent PNGs',
-          'Screenshots, concept art, and GIFs',
-          'Fact sheet and short description copy',
-          'Creator bio and contact info'
-        ],
-        media: [
-          ['assets/twr2-screen1.png', 'Movement screenshot'],
-          ['assets/twr2-screen2.png', 'Combat preview screenshot'],
-          ['assets/twr2-screen3.png', 'Class promotion screenshot'],
-          ['assets/twr2-screen4.png', 'Combat screenshot'],
-          ['assets/twr2-screen5.png', 'Level-up screenshot'],
-          ['assets/twr2-screen6.png', 'Dialogue screenshot']
+        characters: [
+          'assets/twr2-char-1.png',
+          'assets/twr2-char-2.png',
+          'assets/twr2-char-3.png',
+          'assets/twr2-char-4.png',
+          'assets/twr2-char-5.png'
         ]
       }
     };
 
     const els = {
-      body: document.body,
       title: document.getElementById('heroTitle'),
       eyebrow: document.getElementById('heroEyebrow'),
-      bodyText: document.getElementById('heroBody'),
-      heroImage: document.getElementById('heroImage'),
+      heroBody: document.getElementById('heroBody'),
       heroCardTitle: document.getElementById('heroCardTitle'),
       heroCardBody: document.getElementById('heroCardBody'),
       trailerText: document.getElementById('trailerText'),
       trailerEmbed: document.getElementById('trailerEmbed'),
-      mediaText: document.getElementById('mediaText'),
+      galleryText: document.getElementById('galleryText'),
       featuresText: document.getElementById('featuresText'),
-      pressText: document.getElementById('pressText'),
-      pressSummary: document.getElementById('pressSummary'),
       aboutText: document.getElementById('aboutText'),
-      aboutGameTitle: document.getElementById('aboutGameTitle'),
-      aboutGameBody: document.getElementById('aboutGameBody'),
       aboutDevBody: document.getElementById('aboutDevBody'),
+      aboutDevBody2: document.getElementById('aboutDevBody2'),
       primaryCta: document.getElementById('primaryCta'),
-      pressCta: document.getElementById('pressCta'),
-      pressMainButton: document.getElementById('pressMainButton'),
-      steamStoreButton: document.getElementById('steamStoreButton'),
+      heroYoutube: document.getElementById('heroYoutube'),
+      headerPressKit: document.getElementById('headerPressKit'),
       steamLink: document.getElementById('steamLink'),
       youtubeLink: document.getElementById('youtubeLink'),
       twitterLink: document.getElementById('twitterLink'),
       discordLink: document.getElementById('discordLink'),
       footerSteam: document.getElementById('footerSteam'),
-      footerPress: document.getElementById('footerPress'),
       footerYoutube: document.getElementById('footerYoutube'),
+      footerTwitter: document.getElementById('footerTwitter'),
+      footerDiscord: document.getElementById('footerDiscord'),
+      footerPress: document.getElementById('footerPress'),
       stats: document.getElementById('stats'),
-      featureGrid: document.getElementById('featureGrid'),
-      pressList: document.getElementById('pressList'),
-      mediaGrid: document.getElementById('mediaGrid')
+      galleryGrid: document.getElementById('galleryGrid'),
+      featureTabs: document.getElementById('featureTabs'),
+      featureTitle: document.getElementById('featureTitle'),
+      featureDescription: document.getElementById('featureDescription'),
+      featureVideo: document.getElementById('featureVideo'),
+      heroVideo: document.getElementById('heroVideo'),
+      characterLeft: document.getElementById('characterLeft'),
+      characterRight: document.getElementById('characterRight')
     };
+
+    let currentGameKey = 'twr';
+    let currentFeatureIndex = 0;
+    let sectionProgressMap = [];
+
+    function setHref(el, value) {
+      el.href = value;
+    }
 
     function renderStats(stats) {
       els.stats.innerHTML = stats.map(([value, label]) => `
@@ -795,31 +1030,72 @@
       `).join('');
     }
 
-    function renderFeatures(features) {
-      els.featureGrid.innerHTML = features.map(([title, body]) => `
-        <article class="feature">
-          <h3>${title}</h3>
-          <p>${body}</p>
-        </article>
-      `).join('');
-    }
-
-    function renderPressItems(items) {
-      els.pressList.innerHTML = items.map(item => `<li>${item}</li>`).join('');
-    }
-
-    function renderMedia(items, gameTitle) {
-      els.mediaGrid.innerHTML = items.map(([src, caption]) => `
-        <figure class="media-card">
-          <img src="${src}" alt="${gameTitle} media" loading="lazy" />
-          <figcaption class="media-caption">${caption}</figcaption>
+    function renderGallery(items, title) {
+      els.galleryGrid.innerHTML = items.map((src, index) => `
+        <figure class="gallery-shot">
+          <img src="${src}" alt="${title} screenshot ${index + 1}" loading="lazy" />
         </figure>
       `).join('');
     }
 
-    function setHref(el, value) {
-      el.href = value;
+    function renderFeatureTabs(features) {
+      els.featureTabs.innerHTML = features.map((feature, index) => `
+        <button class="feature-tab ${index === 0 ? 'active' : ''}" data-feature-index="${index}">
+          <strong>${feature.title}</strong>
+          <span>${feature.description}</span>
+        </button>
+      `).join('');
+
+      els.featureTabs.querySelectorAll('.feature-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const index = Number(tab.dataset.featureIndex || 0);
+          setFeature(index, true);
+        });
+      });
     }
+
+    function setFeature(index, playVideo = true) {
+      const game = games[currentGameKey];
+      const feature = game.features[index];
+      if (!feature) {
+        return;
+      }
+
+      currentFeatureIndex = index;
+      els.featureTitle.textContent = feature.title;
+      els.featureDescription.textContent = feature.description;
+      els.featureVideo.poster = feature.thumb;
+      if (els.featureVideo.src !== new URL(feature.video, window.location.href).href) {
+        els.featureVideo.src = feature.video;
+      }
+
+      els.featureTabs.querySelectorAll('.feature-tab').forEach(tab => {
+        tab.classList.toggle('active', Number(tab.dataset.featureIndex) === index);
+      });
+
+      if (playVideo) {
+        els.featureVideo.currentTime = 0;
+        const playPromise = els.featureVideo.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(() => {});
+        }
+      }
+    }
+
+    function setHeroVideo(game) {
+      els.heroVideo.poster = game.heroPoster;
+      els.heroVideo.src = game.heroVideo;
+      els.heroVideo.loop = false;
+      els.heroVideo.currentTime = 0;
+      const playPromise = els.heroVideo.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {});
+      }
+    }
+
+    els.heroVideo.addEventListener('ended', () => {
+      els.heroVideo.pause();
+    });
 
     function applyGame(key) {
       const game = games[key];
@@ -827,43 +1103,42 @@
         return;
       }
 
-      document.title = game.title;
-      document.documentElement.style.setProperty('--hero-image', game.backgroundImage);
+      currentGameKey = key;
+      currentFeatureIndex = 0;
 
+      document.title = game.title;
       els.title.textContent = game.title;
       els.eyebrow.textContent = game.eyebrow;
-      els.bodyText.textContent = game.heroBody;
-      els.heroImage.src = game.heroImage;
-      els.heroImage.alt = `${game.title} key art`;
-      els.heroCardTitle.textContent = game.cardTitle;
-      els.heroCardBody.textContent = game.cardBody;
+      els.heroBody.textContent = game.heroBody;
+      els.heroCardTitle.textContent = game.heroCardTitle;
+      els.heroCardBody.textContent = game.heroCardBody;
       els.trailerText.textContent = game.trailerText;
       els.trailerEmbed.src = game.trailerEmbed;
-      els.mediaText.textContent = game.mediaText;
+      els.galleryText.textContent = game.galleryText;
       els.featuresText.textContent = game.featuresText;
-      els.pressText.textContent = game.pressText;
-      els.pressSummary.textContent = game.pressSummary;
       els.aboutText.textContent = game.aboutText;
-      els.aboutGameTitle.textContent = game.aboutGameTitle;
-      els.aboutGameBody.textContent = game.aboutGameBody;
       els.aboutDevBody.textContent = game.aboutDevBody;
+      els.aboutDevBody2.textContent = game.aboutDevBody2;
 
       setHref(els.primaryCta, game.steamUrl);
-      setHref(els.pressCta, game.pressUrl);
-      setHref(els.pressMainButton, game.pressUrl);
-      setHref(els.steamStoreButton, game.steamUrl);
+      els.heroYoutube.href = '#trailer';
+      setHref(els.headerPressKit, game.pressUrl);
       setHref(els.steamLink, game.steamUrl);
       setHref(els.youtubeLink, game.youtubeUrl);
       setHref(els.twitterLink, game.twitterUrl);
       setHref(els.discordLink, game.discordUrl);
       setHref(els.footerSteam, game.steamUrl);
-      setHref(els.footerPress, game.pressUrl);
       setHref(els.footerYoutube, game.youtubeUrl);
+      setHref(els.footerTwitter, game.twitterUrl);
+      setHref(els.footerDiscord, game.discordUrl);
+      setHref(els.footerPress, game.pressUrl);
 
       renderStats(game.stats);
-      renderFeatures(game.features);
-      renderPressItems(game.pressItems);
-      renderMedia(game.media, game.title);
+      renderGallery(game.gallery, game.title);
+      renderFeatureTabs(game.features);
+      setFeature(0, false);
+      setHeroVideo(game);
+      updateCharacters(true);
 
       document.querySelectorAll('.brand-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.game === key);
@@ -874,12 +1149,104 @@
       history.replaceState({}, '', url);
     }
 
+    function getSectionProgress(section) {
+      const rect = section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const start = viewportHeight * 0.75;
+      const end = -rect.height * 0.45;
+      const total = start - end;
+      const current = start - rect.top;
+      return Math.max(0, Math.min(1, current / total));
+    }
+
+    function updateCharacters(force = false) {
+      if (window.innerWidth <= 760) {
+        els.characterLeft.style.opacity = 0;
+        els.characterRight.style.opacity = 0;
+        return;
+      }
+
+      const game = games[currentGameKey];
+      const sections = document.querySelectorAll('main .section');
+      let leftSrc = '';
+      let rightSrc = '';
+      let leftOpacity = 0;
+      let rightOpacity = 0;
+
+      sections.forEach(section => {
+        const progress = getSectionProgress(section);
+        const index = Number(section.dataset.characterIndex || 0);
+        const side = section.dataset.characterSide;
+        const src = game.characters[index] || game.characters[game.characters.length - 1] || '';
+
+        if (side === 'left' && progress > leftOpacity) {
+          leftOpacity = progress;
+          leftSrc = src;
+        }
+
+        if (side === 'right' && progress > rightOpacity) {
+          rightOpacity = progress;
+          rightSrc = src;
+        }
+      });
+
+      if (leftSrc && (force || !els.characterLeft.src.endsWith(leftSrc))) {
+        els.characterLeft.src = leftSrc;
+      }
+      if (rightSrc && (force || !els.characterRight.src.endsWith(rightSrc))) {
+        els.characterRight.src = rightSrc;
+      }
+
+      els.characterLeft.style.opacity = Math.min(leftOpacity, 0.95);
+      els.characterRight.style.opacity = Math.min(rightOpacity, 0.95);
+    }
+
+    function updateParallax() {
+      const y = window.scrollY || window.pageYOffset;
+      const heroHeight = Math.max(1, window.innerHeight - 120);
+      const heroProgress = Math.max(0, Math.min(1, y / heroHeight));
+      const heroOffset = heroProgress * 38;
+      const globalOffset = Math.min(y * 0.04, 32);
+      const leftOffset = Math.min(y * 0.03, 26);
+      const rightOffset = Math.min(y * 0.024, 20);
+
+      document.documentElement.style.setProperty('--hero-offset', `${heroOffset}px`);
+      document.documentElement.style.setProperty('--parallax-y', `${globalOffset}px`);
+      document.documentElement.style.setProperty('--char-left-y', `${leftOffset}px`);
+      document.documentElement.style.setProperty('--char-right-y', `${rightOffset}px`);
+    }
+
+    function updateFeaturePlayback() {
+      const rect = document.getElementById('features').getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const visible = rect.top < viewportHeight * 0.72 && rect.bottom > viewportHeight * 0.28;
+
+      if (visible) {
+        const playPromise = els.featureVideo.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(() => {});
+        }
+      } else {
+        els.featureVideo.pause();
+      }
+    }
+
+    function onScroll() {
+      updateParallax();
+      updateCharacters();
+      updateFeaturePlayback();
+    }
+
     document.querySelectorAll('.brand-btn').forEach(btn => {
       btn.addEventListener('click', () => applyGame(btn.dataset.game));
     });
 
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+
     const initial = new URLSearchParams(window.location.search).get('game');
     applyGame(initial && games[initial] ? initial : 'twr');
+    onScroll();
   </script>
 </body>
 </html>
