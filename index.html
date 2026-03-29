@@ -3,25 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Those Who Rule</title>
+  <title>Those Who Rule 2</title>
   <meta name="description" content="Official site for Those Who Rule and Those Who Rule 2." />
   <style>
     :root {
       --bg: #081019;
       --bg-soft: #0e1623;
-      --panel: rgba(8, 13, 22, 0.82);
-      --panel-strong: rgba(8, 13, 22, 0.92);
+      --panel: rgba(8, 13, 22, 0.84);
       --text: #eef2f7;
       --muted: #aeb7c6;
       --line: rgba(255, 255, 255, 0.1);
       --gold: #c8a96b;
       --gold-strong: #e4c789;
       --max: 1240px;
-      --radius: 22px;
       --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
       --header-h: 88px;
-      --hero-offset: 0px;
-      --parallax-y: 0px;
+      --hero-parallax: 0px;
       --char-left-y: 0px;
       --char-right-y: 0px;
     }
@@ -71,7 +68,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      height: var(--header-h);
+      min-height: var(--header-h);
       border-bottom: 1px solid var(--line);
       background: rgba(7, 11, 18, 0.8);
       backdrop-filter: blur(16px);
@@ -79,7 +76,7 @@
 
     .header-inner {
       max-width: var(--max);
-      height: 100%;
+      min-height: var(--header-h);
       margin: 0 auto;
       padding: 0 20px;
       display: grid;
@@ -183,6 +180,11 @@
       display: block;
     }
 
+    .social-link.steam svg {
+      width: 20px;
+      height: 20px;
+    }
+
     .social-link:hover {
       color: var(--text);
       border-color: rgba(255,255,255,0.24);
@@ -198,9 +200,9 @@
 
     .character {
       position: absolute;
-      top: 50%;
-      width: min(25vw, 360px);
-      max-height: 80vh;
+      top: 52%;
+      width: min(24vw, 340px);
+      max-height: 82vh;
       object-fit: contain;
       filter: drop-shadow(0 18px 40px rgba(0,0,0,0.35));
       opacity: 0;
@@ -211,13 +213,11 @@
     .character-left {
       left: clamp(10px, 2vw, 30px);
       transform: translateY(calc(-50% + var(--char-left-y)));
-      transform-origin: center center;
     }
 
     .character-right {
       right: clamp(10px, 2vw, 30px);
       transform: translateY(calc(-50% + var(--char-right-y)));
-      transform-origin: center center;
     }
 
     .section {
@@ -233,25 +233,22 @@
       min-height: calc(100vh - var(--header-h));
       display: flex;
       align-items: stretch;
-      padding-top: 26px;
-      padding-bottom: 16px;
+      padding: 0;
+      max-width: none;
     }
 
     .hero-shell {
       width: 100%;
       position: relative;
-      min-height: min(840px, calc(100vh - var(--header-h) - 28px));
-      border: 1px solid var(--line);
-      border-radius: 28px;
+      min-height: calc(100vh - var(--header-h));
       overflow: hidden;
-      box-shadow: var(--shadow);
       background: #050b14;
     }
 
     .hero-media {
       position: absolute;
-      inset: -3% -2% 0 -2%;
-      transform: translateY(calc(var(--hero-offset) + var(--parallax-y)));
+      inset: -4% -2% 0 -2%;
+      transform: translateY(var(--hero-parallax));
       will-change: transform;
     }
 
@@ -267,8 +264,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at center, rgba(0,0,0,0) 34%, rgba(0,0,0,0.45) 90%),
-        linear-gradient(180deg, rgba(6,10,16,0.35) 0%, rgba(6,10,16,0.65) 48%, rgba(6,10,16,0.84) 100%);
+        radial-gradient(circle at center, rgba(0,0,0,0) 28%, rgba(0,0,0,0.45) 88%),
+        linear-gradient(180deg, rgba(6,10,16,0.35) 0%, rgba(6,10,16,0.62) 48%, rgba(6,10,16,0.9) 100%);
       pointer-events: none;
     }
 
@@ -276,11 +273,13 @@
       position: relative;
       z-index: 2;
       min-height: inherit;
+      max-width: var(--max);
+      margin: 0 auto;
       display: grid;
       grid-template-columns: minmax(0, 1fr) 340px;
       gap: 24px;
       align-items: end;
-      padding: 42px;
+      padding: 42px 20px;
     }
 
     .hero-copy {
@@ -414,12 +413,6 @@
       letter-spacing: -0.04em;
     }
 
-    .section-head p {
-      margin: 0;
-      color: var(--muted);
-      max-width: 60ch;
-    }
-
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -544,7 +537,7 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 320px 1fr;
       gap: 18px;
     }
 
@@ -555,27 +548,20 @@
       padding: 22px;
     }
 
+    .dev-portrait {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
     .about-card h3 {
       margin: 0 0 10px;
       font-size: 1.2rem;
     }
 
-    .about-card p,
-    .about-card li {
+    .about-card p {
       color: var(--muted);
-    }
-
-    .contact-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 12px;
-    }
-
-    .contact-list a {
-      color: var(--text);
-      font-weight: 700;
     }
 
     .footer {
@@ -601,11 +587,7 @@
         align-content: center;
         padding-top: 10px;
         padding-bottom: 10px;
-        height: auto;
-      }
-
-      .site-header {
-        height: auto;
+        min-height: auto;
       }
 
       .main-nav {
@@ -616,10 +598,6 @@
       .feature-shell,
       .about-grid {
         grid-template-columns: 1fr;
-      }
-
-      .hero-shell {
-        min-height: 760px;
       }
 
       .gallery-shot {
@@ -645,7 +623,7 @@
       }
 
       .hero-content {
-        padding: 24px;
+        padding: 24px 14px;
         gap: 18px;
       }
 
@@ -699,8 +677,8 @@
     <header class="site-header">
       <div class="header-inner">
         <div class="brand-switcher">
-          <button class="brand-btn active" data-game="twr">Those Who Rule</button>
-          <button class="brand-btn" data-game="twr2">Those Who Rule 2</button>
+          <button class="brand-btn" data-game="twr">Those Who Rule</button>
+          <button class="brand-btn active" data-game="twr2">Those Who Rule 2</button>
         </div>
 
         <nav class="main-nav">
@@ -713,7 +691,7 @@
         <div class="header-actions">
           <a class="press-btn" id="headerPressKit" href="#" target="_blank" rel="noreferrer">Press Kit</a>
           <div class="socials">
-            <a class="social-link" id="steamLink" href="#" target="_blank" rel="noreferrer" aria-label="Steam">
+            <a class="social-link steam" id="steamLink" href="#" target="_blank" rel="noreferrer" aria-label="Steam">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M11.98 1.5a10.5 10.5 0 0 0-10.13 13.28l4.98 2.07a3.56 3.56 0 0 1 2.02-.1l2.22-3.22v-.05a4.47 4.47 0 1 1 4.47 4.47h-.1l-3.17 2.26c.01.16.03.31.03.47a3.58 3.58 0 1 1-3.58-3.58h.16l2.22-3.17a4.48 4.48 0 0 1 4.4-5.44 4.47 4.47 0 0 1 0 8.94 4.33 4.33 0 0 1-.51-.03l-2.24 3.2a3.58 3.58 0 0 1-5.72 3.55l-4-1.66A10.5 10.5 0 1 0 11.98 1.5Zm-1.4 17.75-1.14-.47a2.03 2.03 0 1 0 .77 3.98 2.04 2.04 0 0 0 .37-3.5Zm4.92-8.84a2.93 2.93 0 1 0 2.93 2.93 2.93 2.93 0 0 0-2.93-2.93Z"/>
               </svg>
@@ -744,16 +722,16 @@
     </div>
 
     <main>
-      <section class="section hero" id="top" data-character-side="left" data-character-index="0">
+      <section class="section hero" id="top" data-character-side="none" data-character-index="-1">
         <div class="hero-shell">
-          <div class="hero-media" id="heroMediaWrap">
+          <div class="hero-media">
             <video id="heroVideo" muted playsinline preload="metadata"></video>
           </div>
 
           <div class="hero-content">
             <div class="hero-copy">
-              <div class="eyebrow" id="heroEyebrow">Tactical RPG</div>
-              <h1 id="heroTitle">Those Who Rule</h1>
+              <div class="eyebrow" id="heroEyebrow">Upcoming Tactical RPG</div>
+              <h1 id="heroTitle">Those Who Rule 2</h1>
               <p id="heroBody"></p>
 
               <div class="cta-row">
@@ -772,12 +750,9 @@
         </div>
       </section>
 
-      <section class="section" id="trailer" data-character-side="right" data-character-index="1">
+      <section class="section" id="trailer" data-character-side="left" data-character-index="0">
         <div class="section-head">
-          <div>
-            <h2>Trailer</h2>
-            <p id="trailerText"></p>
-          </div>
+          <h2>Trailer</h2>
         </div>
         <div class="panel">
           <div class="video-wrap">
@@ -786,24 +761,18 @@
         </div>
       </section>
 
-      <section class="section" id="gallery" data-character-side="left" data-character-index="2">
+      <section class="section" id="gallery" data-character-side="right" data-character-index="1">
         <div class="section-head">
-          <div>
-            <h2>Gallery</h2>
-            <p id="galleryText"></p>
-          </div>
+          <h2>Gallery</h2>
         </div>
         <div class="panel">
           <div class="gallery-grid" id="galleryGrid"></div>
         </div>
       </section>
 
-      <section class="section" id="features" data-character-side="right" data-character-index="3">
+      <section class="section" id="features" data-character-side="left" data-character-index="2">
         <div class="section-head">
-          <div>
-            <h2>Features</h2>
-            <p id="featuresText"></p>
-          </div>
+          <h2>Features</h2>
         </div>
         <div class="panel feature-shell">
           <div class="feature-stage">
@@ -819,30 +788,21 @@
         </div>
       </section>
 
-      <section class="section footer" id="about" data-character-side="left" data-character-index="4">
+      <section class="section footer" id="about" data-character-side="right" data-character-index="3">
         <div class="section-head">
-          <div>
-            <h2>About the Developer</h2>
-            <p id="aboutText"></p>
-          </div>
+          <h2>About the Developer</h2>
         </div>
         <div class="panel about-grid">
+          <div class="about-card">
+            <img class="dev-portrait" id="devPortrait" src="assets/dev-portrait.png" alt="Portrait of Eldin Turulja" />
+          </div>
           <div class="about-card">
             <h3>Background</h3>
             <p id="aboutDevBody"></p>
             <p id="aboutDevBody2"></p>
-          </div>
-          <div class="about-card">
-            <h3>Contact</h3>
-            <ul class="contact-list">
-              <li>Email: <a href="mailto:eturulja@thosewhorule.com">eturulja@thosewhorule.com</a></li>
-              <li>Steam: <a id="footerSteam" href="#" target="_blank" rel="noreferrer">Store Page</a></li>
-              <li>YouTube: <a id="footerYoutube" href="#" target="_blank" rel="noreferrer">Those Who Rule</a></li>
-              <li>X / Twitter: <a id="footerTwitter" href="#" target="_blank" rel="noreferrer">@ThoseWhoRule</a></li>
-              <li>Discord: <a id="footerDiscord" href="#" target="_blank" rel="noreferrer">Community Server</a></li>
-              <li>Press Kit: <a id="footerPress" href="#" target="_blank" rel="noreferrer">Download Assets</a></li>
-            </ul>
-            <p class="footer-note">After you drop in the final assets, this page is deployment-ready for GitHub Pages.</p>
+            <h3 style="margin-top: 22px;">Contact</h3>
+            <p>Email: <a href="mailto:eturulja@thosewhorule.com">eturulja@thosewhorule.com</a></p>
+            <p class="footer-note">After you drop in the final assets, this page is ready to ship.</p>
           </div>
         </div>
       </section>
@@ -859,11 +819,7 @@
         heroPoster: 'assets/twr-hero-poster.png',
         heroCardTitle: 'Grounded strategy, sharp consequences',
         heroCardBody: 'Positioning, terrain, and chained abilities decide every fight. No magic. No filler. Just brutal tactical choices.',
-        trailerText: 'A quick look at the world, combat, and tone of the first game.',
         trailerEmbed: 'https://www.youtube.com/embed/YOUR_TWR_VIDEO_ID',
-        galleryText: 'Use a clean set of high-value screenshots here. Keep them all 16:9 and let the art speak for itself.',
-        featuresText: 'Show the game through motion. Each panel should make the fantasy of playing instantly clear.',
-        aboutText: 'A short, human section for press, creators, and anyone curious about who made the games.',
         aboutDevBody: 'Those Who Rule is developed by solo developer Eldin Turulja, who left a corporate software career to finish the tactical RPG he had been building for years on nights and weekends.',
         aboutDevBody2: 'The first game has sold more than 30,000 copies on Steam, and the site exists to give players and press a fast, clean place to see the games, grab assets, and get in touch.',
         steamUrl: 'https://store.steampowered.com/app/1822060/Those_Who_Rule/',
@@ -909,8 +865,7 @@
           'assets/twr-char-1.png',
           'assets/twr-char-2.png',
           'assets/twr-char-3.png',
-          'assets/twr-char-4.png',
-          'assets/twr-char-5.png'
+          'assets/twr-char-4.png'
         ]
       },
       twr2: {
@@ -921,11 +876,7 @@
         heroPoster: 'assets/twr2-hero-poster.png',
         heroCardTitle: 'A more ambitious sequel',
         heroCardBody: 'A broader conflict, sharper faction identity, and a story built around the collapse of a fragile state.',
-        trailerText: 'Use the announcement trailer or teaser here and keep it front and center.',
         trailerEmbed: 'https://www.youtube.com/embed/YOUR_TWR2_VIDEO_ID',
-        galleryText: 'Show key art, early screenshots, mockups, and polished captures. Keep the grid visually consistent.',
-        featuresText: 'Give the sequel its own identity. The page should not feel like the first game with a different logo.',
-        aboutText: 'Keep this section focused on you, the project, and where people should go next.',
         aboutDevBody: 'Those Who Rule 2 builds on the audience and foundation of the first game while pushing harder on presentation, faction identity, and political conflict.',
         aboutDevBody2: 'This page exists to make the sequel easy to understand fast, while giving press and creators a direct path to assets, trailers, and contact details.',
         steamUrl: 'https://store.steampowered.com/app/4299520/Those_Who_Rule_2',
@@ -971,8 +922,7 @@
           'assets/twr2-char-1.png',
           'assets/twr2-char-2.png',
           'assets/twr2-char-3.png',
-          'assets/twr2-char-4.png',
-          'assets/twr2-char-5.png'
+          'assets/twr2-char-4.png'
         ]
       }
     };
@@ -983,11 +933,7 @@
       heroBody: document.getElementById('heroBody'),
       heroCardTitle: document.getElementById('heroCardTitle'),
       heroCardBody: document.getElementById('heroCardBody'),
-      trailerText: document.getElementById('trailerText'),
       trailerEmbed: document.getElementById('trailerEmbed'),
-      galleryText: document.getElementById('galleryText'),
-      featuresText: document.getElementById('featuresText'),
-      aboutText: document.getElementById('aboutText'),
       aboutDevBody: document.getElementById('aboutDevBody'),
       aboutDevBody2: document.getElementById('aboutDevBody2'),
       primaryCta: document.getElementById('primaryCta'),
@@ -997,11 +943,6 @@
       youtubeLink: document.getElementById('youtubeLink'),
       twitterLink: document.getElementById('twitterLink'),
       discordLink: document.getElementById('discordLink'),
-      footerSteam: document.getElementById('footerSteam'),
-      footerYoutube: document.getElementById('footerYoutube'),
-      footerTwitter: document.getElementById('footerTwitter'),
-      footerDiscord: document.getElementById('footerDiscord'),
-      footerPress: document.getElementById('footerPress'),
       stats: document.getElementById('stats'),
       galleryGrid: document.getElementById('galleryGrid'),
       featureTabs: document.getElementById('featureTabs'),
@@ -1013,9 +954,7 @@
       characterRight: document.getElementById('characterRight')
     };
 
-    let currentGameKey = 'twr';
-    let currentFeatureIndex = 0;
-    let sectionProgressMap = [];
+    let currentGameKey = 'twr2';
 
     function setHref(el, value) {
       el.href = value;
@@ -1061,7 +1000,6 @@
         return;
       }
 
-      currentFeatureIndex = index;
       els.featureTitle.textContent = feature.title;
       els.featureDescription.textContent = feature.description;
       els.featureVideo.poster = feature.thumb;
@@ -1104,7 +1042,6 @@
       }
 
       currentGameKey = key;
-      currentFeatureIndex = 0;
 
       document.title = game.title;
       els.title.textContent = game.title;
@@ -1112,11 +1049,7 @@
       els.heroBody.textContent = game.heroBody;
       els.heroCardTitle.textContent = game.heroCardTitle;
       els.heroCardBody.textContent = game.heroCardBody;
-      els.trailerText.textContent = game.trailerText;
       els.trailerEmbed.src = game.trailerEmbed;
-      els.galleryText.textContent = game.galleryText;
-      els.featuresText.textContent = game.featuresText;
-      els.aboutText.textContent = game.aboutText;
       els.aboutDevBody.textContent = game.aboutDevBody;
       els.aboutDevBody2.textContent = game.aboutDevBody2;
 
@@ -1127,11 +1060,6 @@
       setHref(els.youtubeLink, game.youtubeUrl);
       setHref(els.twitterLink, game.twitterUrl);
       setHref(els.discordLink, game.discordUrl);
-      setHref(els.footerSteam, game.steamUrl);
-      setHref(els.footerYoutube, game.youtubeUrl);
-      setHref(els.footerTwitter, game.twitterUrl);
-      setHref(els.footerDiscord, game.discordUrl);
-      setHref(els.footerPress, game.pressUrl);
 
       renderStats(game.stats);
       renderGallery(game.gallery, game.title);
@@ -1149,16 +1077,6 @@
       history.replaceState({}, '', url);
     }
 
-    function getSectionProgress(section) {
-      const rect = section.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      const start = viewportHeight * 0.75;
-      const end = -rect.height * 0.45;
-      const total = start - end;
-      const current = start - rect.top;
-      return Math.max(0, Math.min(1, current / total));
-    }
-
     function updateCharacters(force = false) {
       if (window.innerWidth <= 760) {
         els.characterLeft.style.opacity = 0;
@@ -1167,51 +1085,71 @@
       }
 
       const game = games[currentGameKey];
-      const sections = document.querySelectorAll('main .section');
-      let leftSrc = '';
-      let rightSrc = '';
-      let leftOpacity = 0;
-      let rightOpacity = 0;
+      const sections = Array.from(document.querySelectorAll('main .section')).filter(section => section.dataset.characterSide !== 'none');
+      const scrollMid = (window.innerHeight || document.documentElement.clientHeight) * 0.55;
+      let activeSection = null;
+      let minDistance = Infinity;
 
       sections.forEach(section => {
-        const progress = getSectionProgress(section);
-        const index = Number(section.dataset.characterIndex || 0);
-        const side = section.dataset.characterSide;
-        const src = game.characters[index] || game.characters[game.characters.length - 1] || '';
-
-        if (side === 'left' && progress > leftOpacity) {
-          leftOpacity = progress;
-          leftSrc = src;
-        }
-
-        if (side === 'right' && progress > rightOpacity) {
-          rightOpacity = progress;
-          rightSrc = src;
+        const rect = section.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const distance = Math.abs(center - scrollMid);
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeSection = section;
         }
       });
 
-      if (leftSrc && (force || !els.characterLeft.src.endsWith(leftSrc))) {
-        els.characterLeft.src = leftSrc;
-      }
-      if (rightSrc && (force || !els.characterRight.src.endsWith(rightSrc))) {
-        els.characterRight.src = rightSrc;
+      if (!activeSection) {
+        els.characterLeft.style.opacity = 0;
+        els.characterRight.style.opacity = 0;
+        return;
       }
 
-      els.characterLeft.style.opacity = Math.min(leftOpacity, 0.95);
-      els.characterRight.style.opacity = Math.min(rightOpacity, 0.95);
+      const activeIndex = Number(activeSection.dataset.characterIndex || 0);
+      const activeSide = activeSection.dataset.characterSide;
+      const previousIndex = activeIndex - 1;
+      const activeSrc = game.characters[activeIndex] || '';
+      const previousSrc = previousIndex >= 0 ? (game.characters[previousIndex] || '') : '';
+      const rect = activeSection.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      let transition = 1 - Math.min(Math.abs((rect.top + rect.height / 2) - scrollMid) / (viewportHeight * 0.45), 1);
+      transition = Math.max(0.12, transition);
+
+      if (window.scrollY < Math.max(100, viewportHeight * 0.15)) {
+        els.characterLeft.style.opacity = 0;
+        els.characterRight.style.opacity = 0;
+        return;
+      }
+
+      if (activeSide === 'left') {
+        if (activeSrc && (force || !els.characterLeft.src.endsWith(activeSrc))) {
+          els.characterLeft.src = activeSrc;
+        }
+        if (previousSrc && (force || !els.characterRight.src.endsWith(previousSrc))) {
+          els.characterRight.src = previousSrc;
+        }
+        els.characterLeft.style.opacity = transition;
+        els.characterRight.style.opacity = previousSrc ? Math.max(0, 0.62 - transition * 0.48) : 0;
+      } else {
+        if (activeSrc && (force || !els.characterRight.src.endsWith(activeSrc))) {
+          els.characterRight.src = activeSrc;
+        }
+        if (previousSrc && (force || !els.characterLeft.src.endsWith(previousSrc))) {
+          els.characterLeft.src = previousSrc;
+        }
+        els.characterRight.style.opacity = transition;
+        els.characterLeft.style.opacity = previousSrc ? Math.max(0, 0.62 - transition * 0.48) : 0;
+      }
     }
 
     function updateParallax() {
       const y = window.scrollY || window.pageYOffset;
-      const heroHeight = Math.max(1, window.innerHeight - 120);
-      const heroProgress = Math.max(0, Math.min(1, y / heroHeight));
-      const heroOffset = heroProgress * 38;
-      const globalOffset = Math.min(y * 0.04, 32);
-      const leftOffset = Math.min(y * 0.03, 26);
-      const rightOffset = Math.min(y * 0.024, 20);
+      const heroOffset = Math.min(y * 0.06, 42);
+      const leftOffset = Math.min(y * 0.03, 24);
+      const rightOffset = Math.min(y * 0.026, 20);
 
-      document.documentElement.style.setProperty('--hero-offset', `${heroOffset}px`);
-      document.documentElement.style.setProperty('--parallax-y', `${globalOffset}px`);
+      document.documentElement.style.setProperty('--hero-parallax', `${heroOffset}px`);
       document.documentElement.style.setProperty('--char-left-y', `${leftOffset}px`);
       document.documentElement.style.setProperty('--char-right-y', `${rightOffset}px`);
     }
@@ -1245,7 +1183,7 @@
     window.addEventListener('resize', onScroll);
 
     const initial = new URLSearchParams(window.location.search).get('game');
-    applyGame(initial && games[initial] ? initial : 'twr');
+    applyGame(initial && games[initial] ? initial : 'twr2');
     onScroll();
   </script>
 </body>
