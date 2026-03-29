@@ -451,21 +451,20 @@
     .section-character {
       position: absolute;
       pointer-events: none;
-      z-index: 1;
-      width: min(24vw, 500px);
-      max-height: 85vh;
+      height: 100%;
+      width: auto;
       object-fit: contain;
       filter: drop-shadow(0 18px 40px rgba(0,0,0,0.35));
       opacity: 0.96;
     }
 
     .section-character.left {
-      left: clamp(-60px, -4vw, -0px);
+      left: clamp(-500px, -62vw, -120px);
       top: 50px;
     }
 
     .section-character.right {
-      right: clamp(-60px, -4vw, -0px);
+      right: clamp(-500px, -62vw, -120px);
       top: 50px;
     }
 
