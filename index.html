@@ -201,8 +201,8 @@
     .character {
       position: absolute;
       top: 52%;
-      width: min(24vw, 340px);
-      max-height: 82vh;
+      width: min(36vw, 510px);
+      max-height: 86vh;
       object-fit: contain;
       filter: drop-shadow(0 18px 40px rgba(0,0,0,0.35));
       opacity: 0;
@@ -275,15 +275,13 @@
       min-height: inherit;
       max-width: var(--max);
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 340px;
-      gap: 24px;
-      align-items: end;
+      display: block;
       padding: 42px 20px;
     }
 
     .hero-copy {
       max-width: 760px;
+      padding-bottom: 24px;
     }
 
     .eyebrow {
@@ -353,51 +351,7 @@
       background: rgba(255,255,255,0.09);
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 6px;
-    }
-
-    .stat {
-      padding: 14px 16px;
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 16px;
-      background: rgba(9, 15, 25, 0.48);
-      backdrop-filter: blur(10px);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.35rem;
-      margin-bottom: 4px;
-    }
-
-    .stat span {
-      color: #d5ddea;
-      font-size: 0.9rem;
-    }
-
-    .hero-sidecard {
-      align-self: end;
-      padding: 18px;
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 20px;
-      background: rgba(9, 15, 25, 0.68);
-      backdrop-filter: blur(14px);
-    }
-
-    .hero-sidecard h3 {
-      margin: 0 0 8px;
-      font-size: 1.08rem;
-    }
-
-    .hero-sidecard p {
-      margin: 0;
-      color: #d1d8e4;
-      font-size: 0.96rem;
-    }
+    
 
     .section-head {
       display: flex;
@@ -731,7 +685,7 @@
           <div class="hero-content">
             <div class="hero-copy">
               <div class="eyebrow" id="heroEyebrow">Upcoming Tactical RPG</div>
-              <h1 id="heroTitle">Those Who Rule 2</h1>
+              <img id="heroLogo" src="assets/twr2-logo.png" alt="Those Who Rule 2" style="max-width:min(560px, 82vw); width:100%; height:auto; margin:0 0 18px;" />
               <p id="heroBody"></p>
 
               <div class="cta-row">
@@ -739,13 +693,8 @@
                 <a class="btn btn-secondary" id="heroYoutube" href="#trailer">Watch Trailer</a>
               </div>
 
-              <div class="stats" id="stats"></div>
             </div>
 
-            <aside class="hero-sidecard">
-              <h3 id="heroCardTitle"></h3>
-              <p id="heroCardBody"></p>
-            </aside>
           </div>
         </div>
       </section>
@@ -794,7 +743,7 @@
         </div>
         <div class="panel about-grid">
           <div class="about-card">
-            <img class="dev-portrait" id="devPortrait" src="assets/dev-portrait.png" alt="Portrait of Eldin Turulja" />
+            <img class="dev-portrait" id="devPortrait" src="assets/dev-portrait.jpg" alt="Portrait of Eldin T" />
           </div>
           <div class="about-card">
             <h3>Background</h3>
@@ -815,25 +764,16 @@
         title: 'Those Who Rule',
         eyebrow: 'Tactical RPG',
         heroBody: 'Lead three fresh recruits through a web of betrayal as war looms over the land. Master tactical turn-based battles, build your force, and fight through a grounded low-fantasy civil war.',
+        logo: 'assets/twr-logo.png',
         heroVideo: 'assets/twr-hero-map.mp4',
-        heroPoster: 'assets/twr-hero-poster.png',
-        heroCardTitle: 'Grounded strategy, sharp consequences',
-        heroCardBody: 'Positioning, terrain, and chained abilities decide every fight. No magic. No filler. Just brutal tactical choices.',
-        trailerEmbed: 'https://www.youtube.com/embed/YOUR_TWR_VIDEO_ID',
+        heroPoster: 'assets/twr-hero-poster.png',        trailerEmbed: 'https://www.youtube.com/embed/5F9NeonON6I',
         aboutDevBody: 'Those Who Rule is developed by solo developer Eldin Turulja, who left a corporate software career to finish the tactical RPG he had been building for years on nights and weekends.',
         aboutDevBody2: 'The first game has sold more than 30,000 copies on Steam, and the site exists to give players and press a fast, clean place to see the games, grab assets, and get in touch.',
         steamUrl: 'https://store.steampowered.com/app/1822060/Those_Who_Rule/',
         pressUrl: 'https://drive.google.com/file/d/1xFjk64fhNVgYMaXm4XKoijgh5Hj04C-t/view?usp=sharing',
         youtubeUrl: 'https://www.youtube.com/@thosewhorule',
         twitterUrl: 'https://x.com/ThoseWhoRule',
-        discordUrl: 'https://discord.gg/XWzz8TnxeM',
-        stats: [
-          ['20', 'Story characters'],
-          ['46', 'Branching classes'],
-          ['200+', 'Abilities'],
-          ['30k+', 'Copies sold']
-        ],
-        gallery: [
+        discordUrl: 'https://discord.gg/XWzz8TnxeM',        gallery: [
           'assets/twr-gallery-1.png',
           'assets/twr-gallery-2.png',
           'assets/twr-gallery-3.png',
@@ -872,25 +812,16 @@
         title: 'Those Who Rule 2',
         eyebrow: 'Upcoming Tactical RPG',
         heroBody: 'A nation fractures. Former allies turn into enemies. Lead a cast caught between federation, self-determination, and survival in a harsher, more politically charged follow-up.',
+        logo: 'assets/twr2-logo.png',
         heroVideo: 'assets/twr2-hero-map.mp4',
-        heroPoster: 'assets/twr2-hero-poster.png',
-        heroCardTitle: 'A more ambitious sequel',
-        heroCardBody: 'A broader conflict, sharper faction identity, and a story built around the collapse of a fragile state.',
-        trailerEmbed: 'https://www.youtube.com/embed/YOUR_TWR2_VIDEO_ID',
+        heroPoster: 'assets/twr2-hero-poster.png',        trailerEmbed: 'https://www.youtube.com/embed/CsvS52jomdM',
         aboutDevBody: 'Those Who Rule 2 builds on the audience and foundation of the first game while pushing harder on presentation, faction identity, and political conflict.',
         aboutDevBody2: 'This page exists to make the sequel easy to understand fast, while giving press and creators a direct path to assets, trailers, and contact details.',
         steamUrl: 'https://store.steampowered.com/app/4299520/Those_Who_Rule_2',
         pressUrl: 'https://drive.google.com/drive/u/0/folders/1q9VYGPHWTzJ1kFx45cvy0beA4yXTcTfD',
         youtubeUrl: 'https://www.youtube.com/@thosewhorule',
         twitterUrl: 'https://x.com/ThoseWhoRule',
-        discordUrl: 'https://discord.gg/XWzz8TnxeM',
-        stats: [
-          ['2026', 'Announcement year'],
-          ['2', 'Games in the series'],
-          ['1', 'Fracturing nation'],
-          ['∞', 'Room to grow']
-        ],
-        gallery: [
+        discordUrl: 'https://discord.gg/XWzz8TnxeM',        gallery: [
           'assets/twr2-gallery-1.png',
           'assets/twr2-gallery-2.png',
           'assets/twr2-gallery-3.png',
@@ -928,11 +859,9 @@
     };
 
     const els = {
-      title: document.getElementById('heroTitle'),
       eyebrow: document.getElementById('heroEyebrow'),
       heroBody: document.getElementById('heroBody'),
-      heroCardTitle: document.getElementById('heroCardTitle'),
-      heroCardBody: document.getElementById('heroCardBody'),
+      heroLogo: document.getElementById('heroLogo'),
       trailerEmbed: document.getElementById('trailerEmbed'),
       aboutDevBody: document.getElementById('aboutDevBody'),
       aboutDevBody2: document.getElementById('aboutDevBody2'),
@@ -943,8 +872,7 @@
       youtubeLink: document.getElementById('youtubeLink'),
       twitterLink: document.getElementById('twitterLink'),
       discordLink: document.getElementById('discordLink'),
-      stats: document.getElementById('stats'),
-      galleryGrid: document.getElementById('galleryGrid'),
+            galleryGrid: document.getElementById('galleryGrid'),
       featureTabs: document.getElementById('featureTabs'),
       featureTitle: document.getElementById('featureTitle'),
       featureDescription: document.getElementById('featureDescription'),
@@ -958,15 +886,6 @@
 
     function setHref(el, value) {
       el.href = value;
-    }
-
-    function renderStats(stats) {
-      els.stats.innerHTML = stats.map(([value, label]) => `
-        <div class="stat">
-          <strong>${value}</strong>
-          <span>${label}</span>
-        </div>
-      `).join('');
     }
 
     function renderGallery(items, title) {
@@ -1042,14 +961,11 @@
       }
 
       currentGameKey = key;
-
       document.title = game.title;
-      els.title.textContent = game.title;
+      els.heroLogo.src = game.logo;
+      els.heroLogo.alt = game.title;
       els.eyebrow.textContent = game.eyebrow;
-      els.heroBody.textContent = game.heroBody;
-      els.heroCardTitle.textContent = game.heroCardTitle;
-      els.heroCardBody.textContent = game.heroCardBody;
-      els.trailerEmbed.src = game.trailerEmbed;
+      els.heroBody.textContent = game.heroBody;      els.trailerEmbed.src = game.trailerEmbed;
       els.aboutDevBody.textContent = game.aboutDevBody;
       els.aboutDevBody2.textContent = game.aboutDevBody2;
 
@@ -1059,10 +975,7 @@
       setHref(els.steamLink, game.steamUrl);
       setHref(els.youtubeLink, game.youtubeUrl);
       setHref(els.twitterLink, game.twitterUrl);
-      setHref(els.discordLink, game.discordUrl);
-
-      renderStats(game.stats);
-      renderGallery(game.gallery, game.title);
+      setHref(els.discordLink, game.discordUrl);      renderGallery(game.gallery, game.title);
       renderFeatureTabs(game.features);
       setFeature(0, false);
       setHeroVideo(game);
@@ -1087,59 +1000,52 @@
       const game = games[currentGameKey];
       const sections = Array.from(document.querySelectorAll('main .section')).filter(section => section.dataset.characterSide !== 'none');
       const scrollMid = (window.innerHeight || document.documentElement.clientHeight) * 0.55;
-      let activeSection = null;
-      let minDistance = Infinity;
+
+      let leftSection = null;
+      let rightSection = null;
+      let leftDistance = Infinity;
+      let rightDistance = Infinity;
 
       sections.forEach(section => {
         const rect = section.getBoundingClientRect();
         const center = rect.top + rect.height / 2;
         const distance = Math.abs(center - scrollMid);
-        if (distance < minDistance) {
-          minDistance = distance;
-          activeSection = section;
+        if (section.dataset.characterSide === 'left' && distance < leftDistance) {
+          leftDistance = distance;
+          leftSection = section;
+        }
+        if (section.dataset.characterSide === 'right' && distance < rightDistance) {
+          rightDistance = distance;
+          rightSection = section;
         }
       });
 
-      if (!activeSection) {
+      if (window.scrollY < Math.max(100, (window.innerHeight || document.documentElement.clientHeight) * 0.15)) {
         els.characterLeft.style.opacity = 0;
         els.characterRight.style.opacity = 0;
         return;
       }
 
-      const activeIndex = Number(activeSection.dataset.characterIndex || 0);
-      const activeSide = activeSection.dataset.characterSide;
-      const previousIndex = activeIndex - 1;
-      const activeSrc = game.characters[activeIndex] || '';
-      const previousSrc = previousIndex >= 0 ? (game.characters[previousIndex] || '') : '';
-      const rect = activeSection.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-      let transition = 1 - Math.min(Math.abs((rect.top + rect.height / 2) - scrollMid) / (viewportHeight * 0.45), 1);
-      transition = Math.max(0.12, transition);
-
-      if (window.scrollY < Math.max(100, viewportHeight * 0.15)) {
-        els.characterLeft.style.opacity = 0;
-        els.characterRight.style.opacity = 0;
-        return;
-      }
-
-      if (activeSide === 'left') {
-        if (activeSrc && (force || !els.characterLeft.src.endsWith(activeSrc))) {
-          els.characterLeft.src = activeSrc;
+      if (leftSection) {
+        const idx = Number(leftSection.dataset.characterIndex || 0);
+        const src = game.characters[idx] || '';
+        if (src && (force || !els.characterLeft.src.endsWith(src))) {
+          els.characterLeft.src = src;
         }
-        if (previousSrc && (force || !els.characterRight.src.endsWith(previousSrc))) {
-          els.characterRight.src = previousSrc;
-        }
-        els.characterLeft.style.opacity = transition;
-        els.characterRight.style.opacity = previousSrc ? Math.max(0, 0.62 - transition * 0.48) : 0;
+        els.characterLeft.style.opacity = 0.95;
       } else {
-        if (activeSrc && (force || !els.characterRight.src.endsWith(activeSrc))) {
-          els.characterRight.src = activeSrc;
+        els.characterLeft.style.opacity = 0;
+      }
+
+      if (rightSection) {
+        const idx = Number(rightSection.dataset.characterIndex || 0);
+        const src = game.characters[idx] || '';
+        if (src && (force || !els.characterRight.src.endsWith(src))) {
+          els.characterRight.src = src;
         }
-        if (previousSrc && (force || !els.characterLeft.src.endsWith(previousSrc))) {
-          els.characterLeft.src = previousSrc;
-        }
-        els.characterRight.style.opacity = transition;
-        els.characterLeft.style.opacity = previousSrc ? Math.max(0, 0.62 - transition * 0.48) : 0;
+        els.characterRight.style.opacity = 0.95;
+      } else {
+        els.characterRight.style.opacity = 0;
       }
     }
 
